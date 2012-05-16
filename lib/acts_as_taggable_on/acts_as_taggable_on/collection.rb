@@ -89,8 +89,8 @@ module ActsAsTaggableOn::Taggable
         ].compact
 
         ## Generate scope:
-        tagging_scope = ActsAsTaggableOn::Tagging.select("#{ActsAsTaggableOn::Tagging.table_name}.tag_id, COUNT(#{ActsAsTaggableOn::Tagging.table_name}.tag_id) AS tags_count")
-        tag_scope = ActsAsTaggableOn::Tag.select("#{ActsAsTaggableOn::Tag.table_name}.*, #{ActsAsTaggableOn::Tagging.table_name}.tags_count AS count").order(options[:order]).limit(options[:limit])   
+        tagging_scope = ActsAsTaggableOn::Tagging.select("#{ActsAsTaggableOn::Tagging.table_name}.tag_id, COUNT(#{ActsAsTaggableOn::Tagging.table_name}.tag_id) AS tags_count, #{ActsAsTaggableOn::Tagging.table_name}.context")
+        tag_scope = ActsAsTaggableOn::Tag.select("#{ActsAsTaggableOn::Tag.table_name}.*, #{ActsAsTaggableOn::Tagging.table_name}.tags_count AS count, #{ActsAsTaggableOn::Tagging.table_name}.context AS context").order(options[:order]).limit(options[:limit])   
 
         # Joins and conditions
         tagging_joins.each      { |join|      tagging_scope = tagging_scope.joins(join)      }        
